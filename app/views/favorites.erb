@@ -1,0 +1,9 @@
+<h1>Your Favorites</h1>
+
+<ul>
+<% @movies.each do |m| %>
+  <li><%= m.name %></li>
+<% end %>
+</ul>
+
+<a href="/">Back</a>

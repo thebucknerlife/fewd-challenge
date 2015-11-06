@@ -1,0 +1,100 @@
+<html>
+<head>
+  <!-- bootstrap for easy styling out of the box -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  
+  <!-- loading our own stylesheet - notice it's after bootstrap so we can override bootstrap styles -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body class="container">
+  <div class="row">
+    <h1>Welcome to Moooovies</h1>
+    <h2><em>the</em> movie site for bovines &amp; friends</h2>
+    <a href="/favorites">Your Favorites</a>
+  </div>
+  <div class="row main">  
+    <div class="col-sm-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" id="query" placeholder="Search by Title">
+        </div>
+        <button type="submit" class="btn btn-default" onclick="search(); return false">Search</button>
+      </form>
+      <div id='results'>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <h4 id='title'>plceholder</h4>
+      <p id='year'>plceholder</p>
+      <img id="poster" src="">
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var httpRequest;
+
+    function search() {
+      var query = document.getElementById("query").value;
+      var url = "http://www.omdbapi.com/?r=json&s=" + encodeURI(query);
+      console.log(url);
+
+      httpRequest = new XMLHttpRequest();
+      httpRequest.onreadystatechange = loadResults;
+      httpRequest.open('GET', url);
+      httpRequest.send();
+    }
+
+    function loadResults() {
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        var resultsDiv = document.getElementById('results');
+
+        if (httpRequest.status === 200) {
+          var json = JSON.parse(httpRequest.responseText);
+          var results = json["Search"];
+
+          results.forEach(function(element) {
+            var p = document.createElement("P");
+            p.innerHTML = element['Title'];
+
+            p.dataset.title = element['Title'];
+            p.dataset.year = element['Year'];
+            p.dataset.imdbID = element['imdbID'];
+            p.dataset.poster = element['Poster'];
+
+            p.onclick = function() { 
+              getDetails(p);
+            };
+
+            resultsDiv.appendChild(p);
+          })
+        } else {
+          resultsDiv.innerHTML = "<p>There was an error processing your request</p>";
+        }
+      }
+    }
+
+    function getDetails(element) {
+      var url = "http://www.omdbapi.com/?y=&plot=full&r=json&i=" + element.dataset.imdbID;
+      console.log(url);
+
+      httpRequest = new XMLHttpRequest();
+      httpRequest.onreadystatechange = showDetails;
+      httpRequest.open('GET', url);
+      httpRequest.send();
+    }
+
+    function showDetails(element) {
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        if (httpRequest.status === 200) {
+          var movie = JSON.parse(httpRequest.responseText);
+          console.log(movie);
+          document.getElementById("title").innerHTML = movie['Title'];
+          document.getElementById("year").innerHTML = movie['Year'];
+        } else {
+        }
+      }
+    }
+  </script>
+</body>
+</html>
