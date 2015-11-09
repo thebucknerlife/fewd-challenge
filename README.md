@@ -1,15 +1,3 @@
-#setup
-
-```
-$ cd app/
-$ gem install shotgun
-$ shotgun app.rb
-
-# then visit in browser wherever shotgun serves it
-```
-
----
-
 ![GA Logo](https://raw.github.com/generalassembly/ga-ruby-on-rails-for-devs/master/images/ga.png)
 
 ## WDI Instructor Code Challenge
