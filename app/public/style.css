@@ -1,3 +1,10 @@
+/*stylesheet with out custom styles*/
+
 .main {
   padding-top: 20px;
+}
+
+.result {
+  color: #337ab7;
+  text-decoration: underline;
 }

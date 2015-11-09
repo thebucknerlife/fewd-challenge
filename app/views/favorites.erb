@@ -1,8 +1,9 @@
+<!-- use simple ERB here to show the results. Notice we're loading them from JSON file. -->
 <h1>Your Favorites</h1>
 
 <ul>
 <% @movies.each do |m| %>
-  <li><%= m.name %></li>
+  <li><%= m['name'] %></li>
 <% end %>
 </ul>
 

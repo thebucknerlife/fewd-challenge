@@ -12,13 +12,9 @@ end
 
 post '/favorites' do
   return 'Invalid Request' unless params[:name] && params[:oid]
-
   file = JSON.parse(File.read('data.json'))
-
   new_movie = { name: params[:name], oid: params[:oid] }
-  file << movie
-  
+  file << new_movie
   File.write('data.json', JSON.pretty_generate(file))
-  
-  return movie.to_json
+  return new_movie.to_json
 end
