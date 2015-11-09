@@ -1,10 +1,21 @@
-<!-- use simple ERB here to show the results. Notice we're loading them from JSON file. -->
-<h1>Your Favorites</h1>
+<html>
+<head>
+  <!-- bootstrap for easy styling out of the box -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  
+  <!-- loading our own stylesheet - notice it's after bootstrap so we can override bootstrap styles -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
-<ul>
-<% @movies.each do |m| %>
-  <li><%= m['name'] %></li>
-<% end %>
-</ul>
+<body class="container">
+  <!-- use simple ERB here to show the results. Notice we're loading them from JSON file. -->
+  <h1>Your Favorites</h1>
 
-<a href="/">Back</a>
+  <ul>
+  <% @movies.each do |m| %>
+    <li><%= m['name'] %></li>
+  <% end %>
+  </ul>
+
+  <a href="/">Back</a>
+</body>
